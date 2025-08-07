@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  boards    Board[]
+  
+  @@map("users")
+}
+
+model Board {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  type        BoardType @default(WHITEBOARD)
+  isPublic    Boolean   @default(false)
+  roomId      String?   @unique // For real-time collaboration
+  data        Json?     // Store board/notebook data
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("boards")
+}
+
+enum BoardType {
+  WHITEBOARD
+  NOTEBOOK
+}
