@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
+    "@types/bcryptjs": "^3.0.0",
     "@types/pg": "^8.15.5",
+    "bcryptjs": "^3.0.2",
     "express": "^4.17.3",
     "framer-motion": "^6.3.3",
     "next": "latest",

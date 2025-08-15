@@ -21,6 +21,7 @@ import ImagePicker from "./ImagePicker";
 import LineWidthPicker from "./LineWidthPicker";
 import ModePicker from "./ModePicker";
 import ShapeSelector from "./ShapeSelector";
+import FillToggle from "./FillToggle";
 
 const ToolBar = () => {
   const { canvasRef, bgRef } = useRefs();
@@ -85,6 +86,7 @@ const ToolBar = () => {
         <div className="h-px w-full bg-white" />
 
         <ShapeSelector />
+        <FillToggle />
         <ColorPicker />
         <LineWidthPicker />
         <ModePicker />

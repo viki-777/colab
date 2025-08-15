@@ -232,20 +232,22 @@ export const useSelection = (drawAllMoves: () => Promise<void>) => {
       }
     };
 
-    if (selectionRefs.current) {
+    if (selectionRefs.current && selectionRefs.current.length >= 3) {
       const moveBtn = selectionRefs.current[0];
       const copyBtn = selectionRefs.current[1];
       const deleteBtn = selectionRefs.current[2];
 
-      moveBtn.addEventListener("click", handleSelectionMove);
-      copyBtn.addEventListener("click", handleCopy);
-      deleteBtn.addEventListener("click", createDeleteMove);
+      if (moveBtn && copyBtn && deleteBtn) {
+        moveBtn.addEventListener("click", handleSelectionMove);
+        copyBtn.addEventListener("click", handleCopy);
+        deleteBtn.addEventListener("click", createDeleteMove);
 
-      return () => {
-        moveBtn?.removeEventListener("click", handleSelectionMove);
-        copyBtn?.removeEventListener("click", handleCopy);
-        deleteBtn?.removeEventListener("click", createDeleteMove);
-      };
+        return () => {
+          moveBtn?.removeEventListener("click", handleSelectionMove);
+          copyBtn?.removeEventListener("click", handleCopy);
+          deleteBtn?.removeEventListener("click", createDeleteMove);
+        };
+      }
     }
 
     return () => {};

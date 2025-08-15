@@ -26,7 +26,8 @@ const Home = () => {
 
   useEffect(() => {
     if (!isAuthenticated && !isLoading) {
-      signIn('google', { callbackUrl: '/dashboard' });
+      // Redirect to signin page instead of forcing Google auth
+      router.push('/auth/signin');
       return;
     }
 
@@ -111,7 +112,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header />
       <div className="flex flex-col items-center py-24">
         <h1 className="text-5xl font-extrabold leading-tight sm:text-extra">
           Colabio
@@ -168,9 +169,10 @@ const Home = () => {
             Create
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
 
 export default Home;
+

@@ -16,6 +16,7 @@ export const DEFAULT_MOVE: Move = {
     lineWidth: 1,
     lineColor: { r: 0, g: 0, b: 0, a: 0 },
     fillColor: { r: 0, g: 0, b: 0, a: 0 },
+    fillEnabled: false,
     selection: null,
   },
   id: "",

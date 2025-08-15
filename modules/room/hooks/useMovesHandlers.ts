@@ -91,13 +91,59 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
         break;
       }
 
+      case "line-segment": {
+        if (path.length >= 2) {
+          ctx.beginPath();
+          ctx.moveTo(path[0][0], path[0][1]);
+          ctx.lineTo(path[1][0], path[1][1]);
+          ctx.stroke();
+          ctx.closePath();
+        }
+        break;
+      }
+
+      case "arrow": {
+        if (path.length >= 2) {
+          const [startX, startY] = path[0];
+          const [endX, endY] = path[1];
+          
+          ctx.beginPath();
+          
+          // Calculate angle and distance
+          const dx = endX - startX;
+          const dy = endY - startY;
+          const angle = Math.atan2(dy, dx);
+          const length = Math.sqrt(dx * dx + dy * dy);
+          
+          // Draw main line
+          ctx.moveTo(startX, startY);
+          ctx.lineTo(endX, endY);
+          
+          // Draw arrowhead
+          const headlen = Math.min(20, length * 0.3);
+          ctx.lineTo(
+            endX - headlen * Math.cos(angle - Math.PI / 6),
+            endY - headlen * Math.sin(angle - Math.PI / 6)
+          );
+          ctx.moveTo(endX, endY);
+          ctx.lineTo(
+            endX - headlen * Math.cos(angle + Math.PI / 6),
+            endY - headlen * Math.sin(angle + Math.PI / 6)
+          );
+          
+          ctx.stroke();
+          ctx.closePath();
+        }
+        break;
+      }
+
       case "circle": {
         const { cX, cY, radiusX, radiusY } = move.circle;
 
         ctx.beginPath();
         ctx.ellipse(cX, cY, radiusX, radiusY, 0, 0, 2 * Math.PI);
         ctx.stroke();
-        ctx.fill();
+        if (moveOptions.fillEnabled) ctx.fill();
         ctx.closePath();
         break;
       }
@@ -106,12 +152,45 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
         const { width, height } = move.rect;
 
         ctx.beginPath();
-
         ctx.rect(path[0][0], path[0][1], width, height);
         ctx.stroke();
-        ctx.fill();
-
+        if (moveOptions.fillEnabled) ctx.fill();
         ctx.closePath();
+        break;
+      }
+
+      case "star": {
+        if (path.length >= 2) {
+          const [startX, startY] = path[0];
+          const [endX, endY] = path[1];
+          
+          const width = endX - startX;
+          const height = endY - startY;
+          const centerX = startX + width / 2;
+          const centerY = startY + height / 2;
+          const outerRadius = Math.min(Math.abs(width), Math.abs(height)) / 2;
+          const innerRadius = outerRadius * 0.4;
+          const points = 5;
+          
+          ctx.beginPath();
+          
+          for (let i = 0; i < points * 2; i++) {
+            const angle = (i * Math.PI) / points;
+            const radius = i % 2 === 0 ? outerRadius : innerRadius;
+            const pointX = centerX + Math.cos(angle - Math.PI / 2) * radius;
+            const pointY = centerY + Math.sin(angle - Math.PI / 2) * radius;
+            
+            if (i === 0) {
+              ctx.moveTo(pointX, pointY);
+            } else {
+              ctx.lineTo(pointX, pointY);
+            }
+          }
+          
+          ctx.closePath();
+          ctx.stroke();
+          if (moveOptions.fillEnabled) ctx.fill();
+        }
         break;
       }
 

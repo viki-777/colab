@@ -4,6 +4,7 @@ import { useAuth } from '@/common/context/Auth.context';
 import { useRoom } from '@/common/recoil/room';
 import ThemeToggle from '@/common/components/ThemeToggle';
 import Reactions from './Reactions';
+import UserList from "../UserList";
 import { FaArrowLeft, FaUsers, FaShareAlt, FaEdit, FaSave, FaGlobe, FaLock } from 'react-icons/fa';
 
 interface Board {
@@ -31,7 +32,7 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
   const [loading, setLoading] = useState(true);
 
   const onlineUsers = users.size;
-
+  const [showUserList, setShowUserList] = useState(false);
   useEffect(() => {
     fetchBoardInfo();
   }, [roomId]);
@@ -169,10 +170,22 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
         </div>
 
         {/* Center Section - Hidden on mobile */}
-        <div className="hidden md:flex items-center space-x-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300">
+        
+        <div className="hidden md:flex items-center space-x-4 relative">
+          {/* Clickable Users Icon */}
+          <div
+            className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 cursor-pointer relative"
+            onClick={() => setShowUserList((prev) => !prev)}
+          >
             <FaUsers className="w-4 h-4" />
             <span>{onlineUsers} online</span>
+
+            {/* User List to the LEFT of icon */}
+            {showUserList && (
+              <div className="absolute top-1/2 -translate-y-1/2 right-full mr-3 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 z-50">
+               <UserList /> 
+              </div>
+            )}
           </div>
 
           {board?.isPublic ? (
@@ -187,6 +200,9 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
             </div>
           )}
         </div>
+
+
+      
 
         {/* Right Section */}
         <div className="flex items-center space-x-2 sm:space-x-3 px-3">

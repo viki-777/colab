@@ -57,7 +57,7 @@ export const useDraw = (blocked: boolean) => {
   };
 
   const handleStartDrawing = (x: number, y: number) => {
-    if (!ctx || blocked || blocked || !canvasRef.current) return;
+    if (!ctx || blocked || !canvasRef.current) return;
 
     const canvasRect = canvasRef.current.getBoundingClientRect();
     const [finalX, finalY] = [
@@ -91,7 +91,7 @@ export const useDraw = (blocked: boolean) => {
 
     if (options.mode === "select") {
       ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      drawRect(ctx, tempMoves[0], finalX, finalY, false, true);
+      drawRect(ctx, tempMoves[0], finalX, finalY, false, true, false);
       tempMoves.push([finalX, finalY]);
 
       setupCtxOptions();
@@ -117,15 +117,15 @@ export const useDraw = (blocked: boolean) => {
         break;
 
       case "circle":
-        tempCircle = drawCircle(ctx, tempMoves[0], finalX, finalY, shift);
+        tempCircle = drawCircle(ctx, tempMoves[0], finalX, finalY, shift, options.fillEnabled);
         break;
 
       case "rect":
-        tempSize = drawRect(ctx, tempMoves[0], finalX, finalY, shift);
+        tempSize = drawRect(ctx, tempMoves[0], finalX, finalY, shift, false, options.fillEnabled);
         break;
 
       case "star":
-        drawStar(ctx, tempMoves[0], finalX, finalY, shift);
+        drawStar(ctx, tempMoves[0], finalX, finalY, shift, options.fillEnabled);
         break;
 
       default:
@@ -168,7 +168,7 @@ export const useDraw = (blocked: boolean) => {
         y -= 2;
       }
 
-      if ((width < 4 || width > 4) && (height < 4 || height > 4))
+      if (Math.abs(width) > 4 && Math.abs(height) > 4)
         setSelection({ x, y, width, height });
       else {
         clearSelection();

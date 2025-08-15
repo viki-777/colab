@@ -201,7 +201,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={handleCreateButtonClick}
-                className="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900"
               >
                 <span className="text-base">+</span>
                 <span>Create new</span>
@@ -295,7 +295,19 @@ const Dashboard = () => {
                           <button
                             onClick={(e) => { e.stopPropagation(); deleteBoard(board.id); }}
                             className="text-gray-400 hover:text-red-600 dark:hover:text-red-500 ml-4 rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-red-500"
-                          >⋯</button>
+                          >
+                        <svg
+                            className="w-4 h-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 7h12M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7M10 11v6M14 11v6" />
+                          </svg>
+
+
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -338,7 +350,20 @@ const Dashboard = () => {
                       <button
                         onClick={(e) => { e.stopPropagation(); deleteBoard(board.id); }}
                         className="text-red-500 hover:text-red-700 dark:hover:text-red-400 text-sm font-medium rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-red-500"
-                      >Delete</button>
+                      >
+                        <button
+  type="button"
+  className="inline-flex items-center rounded-xl px-3 py-2 text-sm hover:bg-red-50 text-red-600"
+  aria-label="Delete"
+  title="Delete"
+>
+  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 7h12M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-9 0v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V7M10 11v6M14 11v6" />
+  </svg>
+  Delete
+</button>
+
+                      </button>
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 truncate">{board.title}</h3>
                     {board.description && <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">{board.description}</p>}
@@ -407,7 +432,7 @@ const Dashboard = () => {
                 <button
                   onClick={createBoard}
                   disabled={!newBoard.title.trim()}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 dark:focus:ring-offset-gray-800"
+                  className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 dark:focus:ring-offset-gray-800"
                 >Create</button>
               </div>
             </div>
