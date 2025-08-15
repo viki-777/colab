@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { DEFAULT_MOVE } from "@/common/constants/defaultMove";
-import { getPos } from "@/common/lib/getPos";
+import { getPosWithOffset } from "@/common/lib/getPos";
 import { getStringFromRgba } from "@/common/lib/rgba";
 import { socket } from "@/common/lib/socket";
 import { useOptionsValue } from "@/common/recoil/options";
@@ -9,9 +9,10 @@ import { useSetSelection } from "@/common/recoil/options/options.hooks";
 import { useMyMoves } from "@/common/recoil/room";
 import { useSetSavedMoves } from "@/common/recoil/savedMoves";
 
-import { drawRect, drawCircle, drawLine } from "../helpers/Canvas.helpers";
+import { drawRect, drawCircle, drawLine, drawLineSegment, drawArrow, drawStar } from "../helpers/Canvas.helpers";
 import { useBoardPosition } from "./useBoardPosition";
 import { useCtx } from "./useCtx";
+import { useRefs } from "./useRefs";
 
 let tempMoves: [number, number][] = [];
 let tempCircle = { cX: 0, cY: 0, radiusX: 0, radiusY: 0 };
@@ -24,6 +25,7 @@ export const useDraw = (blocked: boolean) => {
   const { clearSavedMoves } = useSetSavedMoves();
   const { handleAddMyMove } = useMyMoves();
   const { setSelection, clearSelection } = useSetSelection();
+  const { canvasRef } = useRefs();
 
   const movedX = boardPosition.x;
   const movedY = boardPosition.y;
@@ -55,9 +57,13 @@ export const useDraw = (blocked: boolean) => {
   };
 
   const handleStartDrawing = (x: number, y: number) => {
-    if (!ctx || blocked || blocked) return;
+    if (!ctx || blocked || blocked || !canvasRef.current) return;
 
-    const [finalX, finalY] = [getPos(x, movedX), getPos(y, movedY)];
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const [finalX, finalY] = [
+      getPosWithOffset(x, movedX, canvasRect, true), 
+      getPosWithOffset(y, movedY, canvasRect, false)
+    ];
 
     setDrawing(true);
     setupCtxOptions();
@@ -73,9 +79,13 @@ export const useDraw = (blocked: boolean) => {
   };
 
   const handleDraw = (x: number, y: number, shift?: boolean) => {
-    if (!ctx || !drawing || blocked) return;
+    if (!ctx || !drawing || blocked || !canvasRef.current) return;
 
-    const [finalX, finalY] = [getPos(x, movedX), getPos(y, movedY)];
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+    const [finalX, finalY] = [
+      getPosWithOffset(x, movedX, canvasRect, true), 
+      getPosWithOffset(y, movedY, canvasRect, false)
+    ];
 
     drawAndSet();
 
@@ -98,12 +108,24 @@ export const useDraw = (blocked: boolean) => {
         tempMoves.push([finalX, finalY]);
         break;
 
+      case "line-segment":
+        drawLineSegment(ctx, tempMoves[0], finalX, finalY, shift);
+        break;
+
+      case "arrow":
+        drawArrow(ctx, tempMoves[0], finalX, finalY, shift);
+        break;
+
       case "circle":
         tempCircle = drawCircle(ctx, tempMoves[0], finalX, finalY, shift);
         break;
 
       case "rect":
         tempSize = drawRect(ctx, tempMoves[0], finalX, finalY, shift);
+        break;
+
+      case "star":
+        drawStar(ctx, tempMoves[0], finalX, finalY, shift);
         break;
 
       default:

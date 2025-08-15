@@ -3,13 +3,15 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useInterval, useMouse } from "react-use";
 
-import { getPos } from "@/common/lib/getPos";
+import { getPos, getPosWithOffset } from "@/common/lib/getPos";
 import { socket } from "@/common/lib/socket";
 
 import { useBoardPosition } from "../../hooks/useBoardPosition";
+import { useRefs } from "../../hooks/useRefs";
 
 const MousePosition = () => {
   const { x, y } = useBoardPosition();
+  const { canvasRef } = useRefs();
 
   const prevPosition = useRef({ x: 0, y: 0 });
 
@@ -22,9 +24,14 @@ const MousePosition = () => {
   useInterval(() => {
     if (
       (prevPosition.current.x !== docX || prevPosition.current.y !== docY) &&
-      !touchDevice
+      !touchDevice &&
+      canvasRef.current
     ) {
-      socket.emit("mouse_move", getPos(docX, x), getPos(docY, y));
+      const canvasRect = canvasRef.current.getBoundingClientRect();
+      const mouseX = getPosWithOffset(docX, x, canvasRect, true);
+      const mouseY = getPosWithOffset(docY, y, canvasRect, false);
+      
+      socket.emit("mouse_move", mouseX, mouseY);
       prevPosition.current = { x: docX, y: docY };
     }
   }, 150);
@@ -38,7 +45,10 @@ const MousePosition = () => {
       animate={{ x: docX + 15, y: docY + 15 }}
       transition={{ duration: 0.05, ease: "linear" }}
     >
-      {getPos(docX, x).toFixed(0)} | {getPos(docY, y).toFixed(0)}
+      {canvasRef.current ? 
+        `${getPosWithOffset(docX, x, canvasRef.current.getBoundingClientRect(), true).toFixed(0)} | ${getPosWithOffset(docY, y, canvasRef.current.getBoundingClientRect(), false).toFixed(0)}` :
+        `${getPos(docX, x).toFixed(0)} | ${getPos(docY, y).toFixed(0)}`
+      }
     </motion.div>
   );
 };

@@ -1,13 +1,14 @@
 import { RgbaColor } from "react-colorful";
 
 export declare global {
-  type Shape = "line" | "circle" | "rect" | "image";
+  type Shape = "line" | "circle" | "rect" | "image" | "arrow" | "line-segment" | "star";
   type CtxMode = "eraser" | "draw" | "select";
 
   interface CtxOptions {
     lineWidth: number;
     lineColor: RgbaColor;
     fillColor: RgbaColor;
+    fillEnabled: boolean;
     shape: Shape;
     mode: CtxMode;
     selection: {

@@ -5,6 +5,7 @@ export const optionsAtom = atom<CtxOptions>({
   default: {
     lineColor: { r: 0, g: 0, b: 0, a: 1 },
     fillColor: { r: 0, g: 0, b: 0, a: 0 },
+    fillEnabled: false,
     lineWidth: 5,
     mode: "draw",
     shape: "line",

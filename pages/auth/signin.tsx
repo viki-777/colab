@@ -1,71 +1,3 @@
-// import { GetServerSideProps } from 'next'
-// import { getProviders, signIn, getSession } from 'next-auth/react'
-// import { FcGoogle } from 'react-icons/fc'
-
-// interface Provider {
-//   id: string
-//   name: string
-//   type: string
-//   signinUrl: string
-//   callbackUrl: string
-// }
-
-// interface SignInProps {
-//   providers: Record<string, Provider>
-// }
-
-// export default function SignIn({ providers }: SignInProps) {
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-//       <div className="max-w-md w-full space-y-8">
-//         <div>
-//           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-//             Sign in to Colabio
-//           </h2>
-//           <p className="mt-2 text-center text-sm text-gray-600">
-//             Collaborate on the digital whiteboard
-//           </p>
-//         </div>
-//         <div className="mt-8 space-y-6">
-//           {Object.values(providers).map((provider) => (
-//             <div key={provider.name}>
-//               <button
-//                 onClick={() => signIn(provider.id, { callbackUrl: '/' })}
-//                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 border-gray-300 shadow-sm"
-//               >
-//                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-//                   <FcGoogle className="h-6 w-6" />
-//                 </span>
-//                 Sign in with {provider.name}
-//               </button>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const session = await getSession(context)
-
-//   if (session) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     }
-//   }
-
-//   const providers = await getProviders()
-
-//   return {
-//     props: {
-//       providers: providers ?? {},
-//     },
-//   }
-// }
 
 
 import { GetServerSideProps } from 'next'
@@ -141,3 +73,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   }
 }
+

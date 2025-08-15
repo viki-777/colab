@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { BiRectangle } from "react-icons/bi";
-import { BsCircle } from "react-icons/bs";
+import { BsCircle, BsArrowUp, BsStar } from "react-icons/bs";
 import { CgShapeZigzag } from "react-icons/cg";
+import { AiOutlineLine } from "react-icons/ai";
 import { useClickAway } from "react-use";
 
 import { useOptions } from "@/common/recoil/options";
@@ -38,12 +39,15 @@ const ShapeSelector = () => {
         {options.shape === "circle" && <BsCircle />}
         {options.shape === "rect" && <BiRectangle />}
         {options.shape === "line" && <CgShapeZigzag />}
+        {options.shape === "line-segment" && <AiOutlineLine />}
+        {options.shape === "arrow" && <BsArrowUp />}
+        {options.shape === "star" && <BsStar />}
       </button>
 
       <AnimatePresence>
         {opened && (
           <motion.div
-            className="absolute left-14 z-10 flex gap-1 rounded-lg border bg-zinc-900 p-2 md:border-0"
+            className="absolute left-14 z-10 flex flex-wrap gap-1 rounded-lg border bg-zinc-900 p-2 md:border-0 max-w-xs"
             variants={EntryAnimation}
             initial="from"
             animate="to"
@@ -52,13 +56,31 @@ const ShapeSelector = () => {
             <button
               className="btn-icon text-2xl"
               onClick={() => handleShapeChange("line")}
+              title="Free Line"
             >
               <CgShapeZigzag />
             </button>
 
             <button
               className="btn-icon text-2xl"
+              onClick={() => handleShapeChange("line-segment")}
+              title="Line Segment"
+            >
+              <AiOutlineLine />
+            </button>
+
+            <button
+              className="btn-icon text-2xl"
+              onClick={() => handleShapeChange("arrow")}
+              title="Arrow"
+            >
+              <BsArrowUp />
+            </button>
+
+            <button
+              className="btn-icon text-2xl"
               onClick={() => handleShapeChange("rect")}
+              title="Rectangle"
             >
               <BiRectangle />
             </button>
@@ -66,8 +88,17 @@ const ShapeSelector = () => {
             <button
               className="btn-icon text-2xl"
               onClick={() => handleShapeChange("circle")}
+              title="Circle/Ellipse"
             >
               <BsCircle />
+            </button>
+
+            <button
+              className="btn-icon text-2xl"
+              onClick={() => handleShapeChange("star")}
+              title="Star"
+            >
+              <BsStar />
             </button>
           </motion.div>
         )}
