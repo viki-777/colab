@@ -65,7 +65,7 @@ export default function SignIn({ providers }: SignInProps) {
       } else if (result?.ok) {
         console.log('✅ SignIn successful')
         toast.success('Welcome back!')
-        router.push('/')
+        router.push('/dashboard')
       } else {
         console.warn('⚠️ Unexpected signin result:', result)
         toast.error('Authentication failed')
@@ -79,7 +79,7 @@ export default function SignIn({ providers }: SignInProps) {
   }
 
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: '/' })
+    signIn('google', { callbackUrl: '/dashboard' })
   }
 
   return (

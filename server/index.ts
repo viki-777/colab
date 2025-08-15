@@ -6,6 +6,9 @@ import express from "express";
 import next, { NextApiHandler } from "next";
 import { Server } from "socket.io";
 import { v4 } from "uuid";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
@@ -23,6 +26,63 @@ nextApp.prepare().then(async () => {
   });
 
   const rooms = new Map<string, Room>();
+
+  // Save room data to database
+  const saveRoomData = async (roomId: string) => {
+    try {
+      const room = rooms.get(roomId);
+      if (!room) return;
+
+      // Combine all moves into a single array
+      const allMoves = [...room.drawed];
+      room.usersMoves.forEach((moves) => {
+        allMoves.push(...moves);
+      });
+
+      // Find board by roomId and update it
+      await prisma.board.updateMany({
+        where: { roomId },
+        data: {
+          data: {
+            moves: allMoves,
+            lastSaved: new Date().toISOString(),
+          } as any,
+          updatedAt: new Date(),
+        },
+      });
+
+      console.log(`💾 Saved room data for ${roomId}`);
+    } catch (error) {
+      console.error(`❌ Failed to save room data for ${roomId}:`, error);
+    }
+  };
+
+  // Load room data from database
+  const loadRoomData = async (roomId: string): Promise<Move[]> => {
+    try {
+      const board = await prisma.board.findFirst({
+        where: { roomId },
+      });
+
+      if (board?.data && typeof board.data === 'object' && 'moves' in board.data) {
+        const moves = (board.data as any).moves as Move[];
+        console.log(`📂 Loaded ${moves.length} moves for room ${roomId}`);
+        return moves || [];
+      }
+
+      return [];
+    } catch (error) {
+      console.error(`❌ Failed to load room data for ${roomId}:`, error);
+      return [];
+    }
+  };
+
+  // Auto-save room data every 30 seconds
+  const autoSaveInterval = setInterval(() => {
+    rooms.forEach((_, roomId) => {
+      saveRoomData(roomId);
+    });
+  }, 30000); // 30 seconds
 
   const addMove = (roomId: string, socketId: string, move: Move) => {
     const room = rooms.get(roomId);
@@ -51,7 +111,7 @@ nextApp.prepare().then(async () => {
       return joinedRoom;
     };
 
-    const leaveRoom = (roomId: string, socketId: string) => {
+    const leaveRoom = async (roomId: string, socketId: string) => {
       const room = rooms.get(roomId);
       if (!room) return;
 
@@ -59,6 +119,9 @@ nextApp.prepare().then(async () => {
 
       if (userMoves) room.drawed.push(...userMoves);
       room.users.delete(socketId);
+
+      // Save room data when user leaves
+      await saveRoomData(roomId);
 
       socket.leave(roomId);
     };
@@ -86,14 +149,17 @@ nextApp.prepare().then(async () => {
       socket.emit("room_exists", true);
     });
 
-    socket.on("join_room", (roomId, user: AuthenticatedUser) => {
+    socket.on("join_room", async (roomId, user: AuthenticatedUser) => {
       let room = rooms.get(roomId);
 
       // If room doesn't exist, create it (for database-created boards)
       if (!room) {
+        // Load saved room data from database
+        const savedMoves = await loadRoomData(roomId);
+        
         room = {
           usersMoves: new Map(),
-          drawed: [],
+          drawed: savedMoves, // Load previously saved moves
           users: new Map(),
         };
         rooms.set(roomId, room);

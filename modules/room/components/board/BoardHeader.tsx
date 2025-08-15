@@ -220,12 +220,18 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
             <span className="hidden sm:inline">Share</span>
           </button>
 
-          {user?.image && (
-            <img
-              src={user.image}
-              alt={user.name}
-              className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-gray-300 dark:border-gray-600"
-            />
+          {user && (
+            user.image ? (
+              <img
+                src={user.image}
+                alt={user.name}
+                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-gray-300 dark:border-gray-600"
+              />
+            ) : (
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border border-gray-300 dark:border-gray-600 flex items-center justify-center text-white font-semibold text-xs">
+                {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+              </div>
+            )
           )}
         </div>
       </div>

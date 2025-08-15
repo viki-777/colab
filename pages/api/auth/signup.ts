@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { userService } from '../../../lib/userService'
+import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
+const prisma = new PrismaClient()
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,17 +23,40 @@ export default async function handler(
   }
 
   try {
-    const user = await userService.create({ name, email, password })
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email }
+    })
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' })
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 12)
+
+    // Create user
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        createdAt: true,
+      }
+    })
     
     res.status(201).json({
       message: 'User created successfully',
       user
     })
   } catch (error) {
-    if (error instanceof Error && error.message === 'User already exists') {
-      return res.status(400).json({ message: 'User already exists' })
-    }
-    
+    console.error('Signup error:', error)
     res.status(500).json({ message: 'Internal server error' })
   }
 }

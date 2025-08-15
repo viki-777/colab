@@ -50,14 +50,18 @@ const Header = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setOpen((prev) => !prev)}
-                className="flex items-center gap-2 rounded-full focus:outline-none"
+                className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
-                {user.image && (
+                {user.image ? (
                   <img
                     src={user.image}
                     alt={user.name || 'User avatar'}
                     className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-gray-300/70 dark:border-gray-600/90 hover:opacity-90 transition-opacity"
                   />
+                ) : (
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 border-2 border-gray-300/70 dark:border-gray-600/90 flex items-center justify-center text-white font-semibold text-sm hover:opacity-90 transition-opacity">
+                    {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                  </div>
                 )}
               </button>
 

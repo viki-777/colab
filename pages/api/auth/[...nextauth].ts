@@ -1,10 +1,15 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { userService } from '../../../lib/userService'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
+const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
   debug: true, // Enable debug mode
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -30,7 +35,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          const user = userService.findByEmail(credentials.email)
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email }
+          })
+          
           console.log('👤 User lookup result:', user ? {
             id: user.id,
             email: user.email,
@@ -38,12 +46,12 @@ export const authOptions: NextAuthOptions = {
             hasPassword: !!user.password
           } : 'No user found')
           
-          if (!user) {
-            console.log('❌ No user found for email:', credentials.email)
+          if (!user || !user.password) {
+            console.log('❌ No user found or no password for email:', credentials.email)
             return null
           }
 
-          const isPasswordValid = await userService.verifyPassword(credentials.password, user.password)
+          const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
           console.log('🔑 Password validation:', isPasswordValid)
           
           if (!isPasswordValid) {
@@ -56,6 +64,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id,
             email: user.email,
             name: user.name,
+            image: user.image,
           }
         } catch (error) {
           console.error('💥 Error in authorize function:', error)
@@ -65,25 +74,33 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt', // Use JWT for better compatibility with credentials provider
   },
   callbacks: {
-    async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token
+    async jwt({ token, user, account }) {
+      // Persist user id to the token right after signin
+      if (user) {
+        token.id = user.id;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
       // Send properties to the client
       return {
         ...session,
-        accessToken: token.accessToken,
         user: {
           ...session.user,
-          id: token.sub,
+          id: token.id as string,
         }
       }
+    },
+    async redirect({ url, baseUrl }) {
+      // Allow relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allow callback URLs on the same origin
+      if (new URL(url).origin === baseUrl) return url;
+      // Default to dashboard after login
+      return `${baseUrl}/dashboard`;
     },
   },
   pages: {
