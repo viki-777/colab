@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BiRectangle } from "react-icons/bi";
 import { BsCircle, BsArrowUp, BsStar } from "react-icons/bs";
-import { CgShapeZigzag } from "react-icons/cg";
+import { CgShapeCircle, CgShapeZigzag } from "react-icons/cg";
 import { AiOutlineLine } from "react-icons/ai";
 import { useClickAway } from "react-use";
 
@@ -38,11 +38,12 @@ const ShapeSelector = () => {
       >
         {options.shape === "circle" && <BsCircle />}
         {options.shape === "rect" && <BiRectangle />}
-        {options.shape === "line" && <CgShapeZigzag />}
+        {options.shape === "line" && <CgShapeCircle />}
         {options.shape === "line-segment" && <AiOutlineLine />}
         {options.shape === "arrow" && <BsArrowUp />}
         {options.shape === "star" && <BsStar />}
       </button>
+      
 
       <AnimatePresence>
         {opened && (

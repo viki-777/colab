@@ -21,7 +21,7 @@ const ModePicker = () => {
     <>
       <button
         className={`btn-icon text-xl ${
-          options.mode === "draw" && "bg-gradient-to-r from-indigo-600 to-zinc-600"
+          options.mode === "draw" && "bg-gradient-to-r from-indigo-900 to-zinc-600"
         }`}
         onClick={() => {
           setOptions((prev) => ({
