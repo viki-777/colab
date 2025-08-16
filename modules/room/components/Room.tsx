@@ -20,7 +20,7 @@ const Room = () => {
 
   return (
     <RoomContextProvider>
-      <div className="relative h-full w-full overflow-hidden bg-white dark:bg-gray-900">
+      <div className="relative h-full w-full overflow-hidden bg-white dark:bg-gradient-to-r from-indigo-600 to-zinc-600">
         <BoardHeader roomId={room.id} />
         <div className="pt-16 h-full">
           

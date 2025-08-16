@@ -88,7 +88,7 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
 
   if (loading) {
     return (
-      <div className="absolute top-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+      <div className="absolute top-0 left-0 right-0 z-40 bg-white dark:bg-gradient-to-r from-indigo-600 to-zinc-600 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="w-6 h-6 bg-gray-200 dark:bg-gray-600 rounded animate-pulse"></div>
@@ -101,7 +101,7 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
   }
 
   return (
-    <div className="absolute top-0 left-0 right-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+    <div className="absolute top-0 left-0 right-0 z-40 bg-white dark:bg-gradient-to-r from-indigo-900 to-zinc-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="flex items-center justify-between px-2 sm:px-4 py-2 sm:py-3">
         {/* Left Section */}
         <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">

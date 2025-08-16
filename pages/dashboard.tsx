@@ -142,7 +142,7 @@ const Dashboard = () => {
   return (
     <>
       <Header />
-      <div className="bg-gray-50 dark:bg-gray-900 min-h-screen pt-0">
+      <div className="bg-gray-50 dark:bg-gradient-to-br dark:from-indigo-900 dark:via-black dark:via-zinc-900 dark:to-blue-900 min-h-screen pt-0">
         {/* Template Selection Header */}
         <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 sm:px-6 py-4">
           <div className="max-w-7xl mx-auto">

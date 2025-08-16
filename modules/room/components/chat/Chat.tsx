@@ -52,14 +52,14 @@ const Chat = () => {
       transition={{ ease: DEFAULT_EASE, duration: 0.3 }}
     >
       <button
-        className="flex w-full cursor-pointer items-center justify-between bg-gray-100/80 dark:bg-gray-900/80 py-3 px-4 sm:px-6 font-semibold text-gray-800 dark:text-gray-200 text-sm sm:text-base focus:outline-none"
+        className="flex w-full cursor-pointer items-center justify-between bg-gray-100/80 dark:bg-gradient-to-r from-indigo-600 to-zinc-600 py-3 px-4 sm:px-6 font-semibold text-gray-800 dark:text-gray-200 text-sm sm:text-base focus:outline-none"
         onClick={() => {
           setOpened((prev) => !prev);
           setNewMsg(false);
         }}
       >
         <div className="flex items-center gap-3">
-          <BsFillChatFill className="mt-[-2px] text-gray-600 dark:text-gray-400" />
+          <BsFillChatFill className="mt-[-2px] text-gray-600 dark:text-white" />
           <span>Chat</span>
           {newMsg && (
             <span className="rounded-md bg-green-200 text-green-800 dark:bg-green-800/50 dark:text-green-200 px-2 py-0.5 text-xs font-bold">

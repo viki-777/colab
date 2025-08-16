@@ -78,18 +78,18 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-purple-50 px-4 py-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br dark:from-indigo-900 via-black dark:via-zinc-900 dark:to-blue-900">
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Collabio
+            Colabio
           </h1>
           <p className="text-gray-600 mt-2">Create your account to get started</p>
         </div>
 
         {/* Sign Up Form */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100 text-gray-700">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>

@@ -25,7 +25,7 @@ const Header = () => {
   if (!isAuthenticated || !user) return null;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/70 backdrop-blur-lg shadow-lg border-b border-gray-200/50 dark:border-white/10">
+    <header className="sticky top-0 z-50 bg-white/80 dark:bg-gradient-to-r from-indigo-900 to-zinc-900 backdrop-blur-lg shadow-lg border-b border-gray-200/50 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
         <div className="flex justify-between items-center py-2 sm:py-3">
           
