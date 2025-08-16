@@ -94,11 +94,33 @@ export const useSetUsers = () => {
     });
   };
 
+  const handleRemoveMoveById = (moveId: string) => {
+    setRoom((prev) => {
+      const newUsersMoves = new Map(prev.usersMoves);
+      
+      // Remove from all users' moves
+      newUsersMoves.forEach((moves, userId) => {
+        const filteredMoves = moves.filter(move => move.id !== moveId);
+        newUsersMoves.set(userId, filteredMoves);
+      });
+
+      // Remove from movesWithoutUser
+      const filteredMovesWithoutUser = prev.movesWithoutUser.filter(move => move.id !== moveId);
+
+      return { 
+        ...prev, 
+        usersMoves: newUsersMoves,
+        movesWithoutUser: filteredMovesWithoutUser
+      };
+    });
+  };
+
   return {
     handleAddUser,
     handleRemoveUser,
     handleAddMoveToUser,
     handleRemoveMoveFromUser,
+    handleRemoveMoveById,
   };
 };
 
@@ -126,5 +148,12 @@ export const useMyMoves = () => {
     return move;
   };
 
-  return { handleAddMyMove, handleRemoveMyMove, myMoves: room.myMoves };
+  const handleRemoveMyMoveById = (moveId: string) => {
+    setRoom((prev) => ({ 
+      ...prev, 
+      myMoves: prev.myMoves.filter(move => move.id !== moveId)
+    }));
+  };
+
+  return { handleAddMyMove, handleRemoveMyMove, handleRemoveMyMoveById, myMoves: room.myMoves };
 };

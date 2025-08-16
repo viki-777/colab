@@ -70,7 +70,7 @@ const ToolBar = () => {
         <FiChevronRight />
       </motion.button>
       <motion.div
-        className="absolute left-2 sm:left-10 top-[50%] z-50 grid grid-cols-2 items-center gap-3 sm:gap-5 rounded-lg bg-zinc-900 dark:bg-gray-800 p-3 sm:p-5 text-white border border-gray-700 dark:border-gray-600 2xl:grid-cols-1"
+        className="absolute left-2 sm:left-10 top-[50%] z-50 grid grid-cols-2 items-center gap-3 sm:gap-5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 dark:bg-gray-800 p-3 sm:p-5 text-white border border-gray-700 dark:border-gray-600 2xl:grid-cols-1"
         animate={{
           x: opened ? 0 : -160,
           y: "-50%",

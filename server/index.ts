@@ -305,6 +305,42 @@ nextApp.prepare().then(async () => {
       // }
     });
 
+    socket.on("delete_stroke", (moveId) => {
+      console.log("🗑️ Received delete_stroke request for move:", moveId);
+      const roomId = getRoomId();
+      const room = rooms.get(roomId);
+      if (!room) {
+        console.log("❌ Room not found for delete stroke");
+        return;
+      }
+
+      // Remove the move from drawed moves
+      const moveIndex = room.drawed.findIndex(move => move.id === moveId);
+      if (moveIndex !== -1) {
+        console.log("✅ Found move in drawed, removing at index:", moveIndex);
+        room.drawed.splice(moveIndex, 1);
+      } else {
+        console.log("🔍 Move not in drawed, checking users' current moves");
+        // Check in users' current moves
+        let found = false;
+        room.usersMoves.forEach((moves, socketId) => {
+          const userMoveIndex = moves.findIndex(move => move.id === moveId);
+          if (userMoveIndex !== -1) {
+            console.log("✅ Found move in user moves, removing from socket:", socketId);
+            moves.splice(userMoveIndex, 1);
+            found = true;
+          }
+        });
+        if (!found) {
+          console.log("❌ Move not found in any location");
+        }
+      }
+
+      // Broadcast stroke deletion to all clients in the room
+      console.log("📡 Broadcasting stroke_deleted to room:", roomId);
+      io.to(roomId).emit("stroke_deleted", moveId);
+    });
+
     socket.on("undo", () => {
       const roomId = getRoomId();
 

@@ -15,7 +15,7 @@ const FillToggle = () => {
   // Only show fill toggle for shapes that can be filled
   const showFillToggle = ["circle", "rect", "star"].includes(options.shape);
 
-  if (!showFillToggle || options.mode === "select") return null;
+  if (!showFillToggle || options.mode === "select" || options.mode === "stroke_delete") return null;
 
   return (
     <button

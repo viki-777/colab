@@ -23,11 +23,17 @@ export const useSetSavedMoves = () => {
     return move;
   };
 
+  const removeSavedMoveById = (moveId: string) => {
+    setSavedMoves((prevMoves) => {
+      return prevMoves.filter(move => move.id !== moveId);
+    });
+  };
+
   const clearSavedMoves = () => {
     setSavedMoves([]);
   };
 
-  return { addSavedMove, removeSavedMove, clearSavedMoves };
+  return { addSavedMove, removeSavedMove, removeSavedMoveById, clearSavedMoves };
 };
 
 export const useSavedMoves = () => {

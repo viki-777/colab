@@ -83,31 +83,7 @@ const NameInput = () => {
     <>
       <Header />
       <div className="my-24 flex flex-col items-center">
-        <h1 className="text-5xl font-extrabold leading-tight sm:text-extra">
-          Colabio
-        </h1>
-        <h3 className="text-xl sm:text-2xl">Real-time whiteboard</h3>
-
-        <div className="mt-10 mb-3 flex flex-col gap-2">
-          <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-            {user?.image && (
-              <img
-                src={user.image}
-                alt={user.name}
-                className="w-12 h-12 rounded-full"
-              />
-            )}
-            <div>
-              <p className="font-semibold text-gray-900">Joining as {user?.name}</p>
-              <p className="text-sm text-gray-600">{user?.email}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Entering room...</p>
-        </div>
+        Loading....
       </div>
     </>
   );

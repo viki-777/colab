@@ -31,9 +31,10 @@ const Canvas = () => {
     drawing,
     clearOnYourMove,
   } = useDraw(dragging);
-  useSocketDraw(drawing);
-
-  const { handleUndo, handleRedo } = useMovesHandlers(clearOnYourMove);
+  
+  const { handleUndo, handleRedo, drawAllMoves } = useMovesHandlers(clearOnYourMove);
+  
+  useSocketDraw(drawing, drawAllMoves);
 
   useEffect(() => {
     setDragging(false);

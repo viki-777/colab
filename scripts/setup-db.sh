@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# PostgreSQL Database Setup for Digiboard
+# PostgreSQL Database Setup for colabio
 # This script helps set up a local PostgreSQL database
 
-echo "Setting up PostgreSQL database for Digiboard..."
+echo "Setting up PostgreSQL database for colabio..."
 
 # Check if PostgreSQL is installed
 if ! command -v psql &> /dev/null; then
@@ -14,9 +14,9 @@ if ! command -v psql &> /dev/null; then
 fi
 
 # Variables
-DB_NAME="digiboard_db"
-DB_USER="digiboard_user"
-DB_PASSWORD="digiboard_password"
+DB_NAME="colabio_db"
+DB_USER="colabio_user"
+DB_PASSWORD="colabio_password"
 
 echo "Creating database and user..."
 

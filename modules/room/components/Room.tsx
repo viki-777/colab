@@ -10,7 +10,6 @@ import Chat from "./chat/Chat";
 import NameInput from "./NameInput";
 import ToolBar from "./toolbar/ToolBar";
 
-import NotesPanel from "../../notes/components/NotesPanel";
 import BoardHeader from "./board/BoardHeader";
 
 
@@ -34,7 +33,7 @@ const Room = () => {
           <Chat />
           
           
-          <NotesPanel roomId={room.id} />
+          
         </div>
       </div>
     </RoomContextProvider>

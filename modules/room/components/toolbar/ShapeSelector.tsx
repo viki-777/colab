@@ -33,7 +33,7 @@ const ShapeSelector = () => {
     <div className="relative flex items-center" ref={ref}>
       <button
         className="btn-icon text-2xl"
-        disabled={options.mode === "select"}
+        disabled={options.mode === "select" || options.mode === "stroke_delete"}
         onClick={() => setOpened((prev) => !prev)}
       >
         {options.shape === "circle" && <BsCircle />}

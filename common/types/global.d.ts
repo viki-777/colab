@@ -2,7 +2,7 @@ import { RgbaColor } from "react-colorful";
 
 export declare global {
   type Shape = "line" | "circle" | "rect" | "image" | "arrow" | "line-segment" | "star";
-  type CtxMode = "eraser" | "draw" | "select";
+  type CtxMode = "eraser" | "draw" | "select" | "stroke_delete";
 
   interface CtxOptions {
     lineWidth: number;
@@ -122,6 +122,7 @@ export declare global {
     your_move: (move: Move) => void;
     user_draw: (move: Move, userId: string) => void;
     user_undo(userId: string): void;
+    stroke_deleted: (moveId: string) => void;
     mouse_moved: (x: number, y: number, userId: string) => void;
     new_user: (userId: string, user: AuthenticatedUser) => void;
     user_disconnected: (userId: string) => void;
@@ -138,6 +139,7 @@ export declare global {
     draw: (move: Move) => void;
     mouse_move: (x: number, y: number) => void;
     undo: () => void;
+    delete_stroke: (moveId: string) => void;
     create_room: (user: AuthenticatedUser) => void;
     join_room: (room: string, user: AuthenticatedUser) => void;
     joined_room: () => void;

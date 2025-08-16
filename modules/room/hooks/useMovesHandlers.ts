@@ -303,5 +303,5 @@ export const useMovesHandlers = (clearOnYourMove: () => void) => {
     };
   }, [handleUndo, handleRedo]);
 
-  return { handleUndo, handleRedo };
+  return { handleUndo, handleRedo, drawAllMoves };
 };
