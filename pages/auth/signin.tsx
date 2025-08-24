@@ -205,20 +205,29 @@ export default function SignIn({ providers }: SignInProps) {
 
       
       
+
+
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8">
-          <div className="relative w-full max-w-lg h-96 lg:h-[500px]">
-            <img 
-              src="/logo.png" 
-              alt="Collaboration Platform"
-              className="w-full h-full object-cover rounded-3xl shadow-2xl"
-            />
-            <div className="absolute inset-0 bg-black/30 rounded-3xl"></div>
-            <div className="absolute bottom-8 left-8 right-8 text-white">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-2">Real-time Collaboration</h2>
-              <p className="text-lg opacity-90">Join teams from around the world and bring your ideas to life on our interactive digital canvas.</p>
-            </div>
-          </div>
-      </div>
+  <div className="w-full max-w-xl">
+    {/* Image */}
+    <div className="w-full h-[550px]">
+      <img 
+        src="/signin.png" 
+        alt="Collaboration Platform"
+        className="w-full h-full object-cover rounded-3xl shadow-2xl"
+      />
+    </div>
+
+    {/* Text below image */}
+    <div className="mt-6 text-center text-white">
+      <h2 className="text-3xl lg:text-4xl font-bold mb-2">Real-time Collaboration</h2>
+      <p className="text-lg opacity-90">
+        Join teams from around the world and bring your ideas to life on our interactive digital canvas.
+      </p>
+    </div>
+  </div>
+</div>
+
     </div>
   )
 }
