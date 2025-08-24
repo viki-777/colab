@@ -190,12 +190,13 @@ export default function SignIn({ providers }: SignInProps) {
               </button>
             </div>
 
-            {/* Sign Up Link */}
-                      {/* Sign Up Link */}
+          {/* Sign Up Link */}
           <p className="mt-6 text-center text-sm text-gray-600">
             Don't have an account?{' '}
-            <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-              Sign up
+            <Link href="/auth/signup">
+              <a className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+                Sign up
+              </a>
             </Link>
           </p>
           </div>
