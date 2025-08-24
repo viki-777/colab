@@ -95,7 +95,6 @@ export default async function handler(
         res.status(405).end(`Method ${method} Not Allowed`);
     }
   } catch (error) {
-    console.error('API Error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }

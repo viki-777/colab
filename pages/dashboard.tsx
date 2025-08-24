@@ -44,7 +44,6 @@ const Dashboard = () => {
         setBoards(data);
       }
     } catch (error) {
-      console.error('Error fetching boards:', error);
     } finally {
       setLoading(false);
     }
@@ -73,7 +72,6 @@ const Dashboard = () => {
         }
       }
     } catch (error) {
-      console.error('Error creating board:', error);
     }
   };
 
@@ -89,7 +87,6 @@ const Dashboard = () => {
         setBoards(boards.filter(board => board.id !== id));
       }
     } catch (error) {
-      console.error('Error deleting board:', error);
     }
   };
 

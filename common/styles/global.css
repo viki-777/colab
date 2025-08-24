@@ -8,16 +8,25 @@
 
 /* Mobile viewport fixes */
 html {
-  @apply bg-white dark:bg-gray-900;
+  @apply bg-gray-900 text-gray-100;
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  @apply text-gray-900 dark:text-gray-100;
+  @apply bg-gray-900 text-gray-100;
   height: 100%;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Light mode overrides */
+html:not(.dark) {
+  @apply bg-white text-gray-900;
+}
+
+body:not(.dark) {
+  @apply bg-white text-gray-900;
 }
 
 #__next {

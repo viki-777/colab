@@ -210,7 +210,7 @@ const SelectionBtns = () => {
       style={{ top, left }}
     >
       <button
-        className="rounded-full bg-gray-200 p-2 hover:bg-gray-300 transition-colors"
+        className="rounded-full bg-gradient-to-r from-indigo-900 to-zinc-900 p-2 hover:bg-indigo-300 transition-colors"
         onClick={handleMove}
         title="Move Selection"
         ref={(ref) => {
@@ -220,7 +220,7 @@ const SelectionBtns = () => {
         <BsArrowsMove />
       </button>
       <button
-        className="rounded-full bg-gray-200 p-2 hover:bg-gray-300 transition-colors"
+        className="rounded-full bg-gradient-to-r from-indigo-900 to-zinc-900 p-2 hover:bg-gray-300 transition-colors"
         onClick={handleCopy}
         title="Copy Selection"
         ref={(ref) => {
@@ -230,8 +230,9 @@ const SelectionBtns = () => {
         <FiCopy />
       </button>
       <button
-        className="rounded-full bg-gray-200 p-2 hover:bg-gray-300 transition-colors"
+        className="rounded-full bg-gradient-to-r from-indigo-900 to-zinc-900 p-2 hover:bg-red-300 transition-colors"
         onClick={handleDelete}
+        
         title="Delete Selection"
         ref={(ref) => {
           if (ref && selectionRefs.current) selectionRefs.current[2] = ref;

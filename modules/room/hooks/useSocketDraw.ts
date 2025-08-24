@@ -12,7 +12,6 @@ export const useSocketDraw = (drawing: boolean, drawAllMoves: () => Promise<void
   // Handle your own moves coming back from server
   useEffect(() => {
     socket.on("your_move", (move) => {
-      console.log("Received your_move:", move.id);
       addSavedMove(move);
     });
 
@@ -26,7 +25,6 @@ export const useSocketDraw = (drawing: boolean, drawAllMoves: () => Promise<void
     let userIdLater = "";
 
     socket.on("user_draw", (move, userId) => {
-      console.log("Received user_draw:", move.id, "from user:", userId);
       addSavedMove(move); // Also add other users' moves to savedMoves for deletion
       
       if (!drawing) {
@@ -58,16 +56,13 @@ export const useSocketDraw = (drawing: boolean, drawAllMoves: () => Promise<void
 
   useEffect(() => {
     socket.on("stroke_deleted", (moveId) => {
-      console.log("🗑️ Received stroke_deleted event for move:", moveId);
       // Remove move from all state locations
       removeSavedMoveById(moveId);
       handleRemoveMoveById(moveId);
       handleRemoveMyMoveById(moveId);
-      console.log("✅ Move removed from all state locations");
       
       // Redraw the canvas to visually remove the stroke
       drawAllMoves().then(() => {
-        console.log("🎨 Canvas redrawn after stroke deletion");
       });
     });
 

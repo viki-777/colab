@@ -60,13 +60,10 @@ export const useDraw = (blocked: boolean) => {
   // Function to check if a point intersects with a stroke
   const isPointInStroke = (x: number, y: number, move: Move): boolean => {
     if (!move.path?.length) {
-      console.log("Move has no path");
       return false;
     }
 
     const tolerance = Math.max(move.options.lineWidth * 2, 15); // Increased tolerance
-    console.log("Checking intersection with tolerance:", tolerance);
-    console.log("Path points:", move.path.slice(0, 3), "... (showing first 3)");
 
     // Simple bounding box check first
     const allX = move.path.map(p => p[0]);
@@ -76,10 +73,8 @@ export const useDraw = (blocked: boolean) => {
     const minY = Math.min(...allY) - tolerance;
     const maxY = Math.max(...allY) + tolerance;
     
-    console.log(`Bounding box: (${minX},${minY}) to (${maxX},${maxY}), click: (${x},${y})`);
     
     if (x < minX || x > maxX || y < minY || y > maxY) {
-      console.log("Click outside bounding box");
       return false;
     }
 
@@ -109,16 +104,13 @@ export const useDraw = (blocked: boolean) => {
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if (i < 3) { // Log first few segments for debugging
-        console.log(`Segment ${i}: (${x1},${y1}) to (${x2},${y2}), distance: ${distance.toFixed(2)}`);
       }
 
       if (distance <= tolerance) {
-        console.log("Intersection found! Distance:", distance);
         return true;
       }
     }
 
-    console.log("No intersection found for this stroke");
     return false;
   };
 
@@ -126,7 +118,6 @@ export const useDraw = (blocked: boolean) => {
   const handleStrokeDelete = (x: number, y: number) => {
     if (!canvasRef.current) return;
 
-    console.log("handleStrokeDelete called with:", x, y);
 
     const canvasRect = canvasRef.current.getBoundingClientRect();
     const [finalX, finalY] = [
@@ -134,44 +125,35 @@ export const useDraw = (blocked: boolean) => {
       getPosWithOffset(y, movedY, canvasRect, false)
     ];
 
-    console.log("Converted coordinates:", finalX, finalY);
-    console.log("Saved moves count:", savedMoves.length);
 
     // Check all saved moves to find which one was clicked
     const allMoves = savedMoves;
     
-    console.log("All saved moves:", allMoves.map(m => ({ id: m.id, mode: m.options.mode, pathLength: m.path?.length })));
     
     // Find the topmost (last drawn) stroke that intersects with the click point
     for (let i = allMoves.length - 1; i >= 0; i--) {
       const move = allMoves[i];
       
-      console.log(`Checking move ${i}:`, move.id, move.path?.length, "mode:", move.options.mode);
       
       if (move.options.mode === "select" || move.options.mode === "stroke_delete") {
-        console.log("Skipping move due to mode:", move.options.mode);
         continue;
       }
       
       if (isPointInStroke(finalX, finalY, move)) {
-        console.log("Found intersecting stroke:", move.id);
         // Emit delete stroke event to server
         socket.emit("delete_stroke", move.id);
         return; // Exit function after deleting stroke
       }
     }
     
-    console.log("No stroke found at click position");
   };
 
   const handleStartDrawing = (x: number, y: number) => {
     if (!ctx || blocked || !canvasRef.current) return;
 
-    console.log("handleStartDrawing called with mode:", options.mode);
 
     // Handle stroke deletion mode
     if (options.mode === "stroke_delete") {
-      console.log("Stroke delete mode triggered at:", x, y);
       handleStrokeDelete(x, y);
       return;
     }
@@ -182,7 +164,6 @@ export const useDraw = (blocked: boolean) => {
       getPosWithOffset(y, movedY, canvasRect, false)
     ];
 
-    console.log("Starting to draw at:", finalX, finalY);
     setDrawing(true);
     setupCtxOptions();
     drawAndSet();

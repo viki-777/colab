@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { AiOutlineClose } from "react-icons/ai";
 
 import { useBackground, useSetBackground } from "@/common/recoil/background";
@@ -10,7 +8,10 @@ const BackgroundModal = () => {
   const setBackground = useSetBackground();
   const bg = useBackground();
 
-  useEffect(() => closeModal, [bg, closeModal]);
+  const handleBackgroundChange = (mode: "dark" | "light", lines: boolean) => {
+    setBackground(mode, lines);
+    closeModal();
+  };
 
   const renderBg = (
     ref: HTMLCanvasElement | null,
@@ -54,7 +55,7 @@ const BackgroundModal = () => {
           tabIndex={0}
           width={256}
           height={192}
-          onClick={() => setBackground("dark", true)}
+          onClick={() => handleBackgroundChange("dark", true)}
           ref={(ref) => renderBg(ref, "dark", true)}
         />
         <canvas
@@ -62,7 +63,7 @@ const BackgroundModal = () => {
           tabIndex={0}
           width={256}
           height={192}
-          onClick={() => setBackground("light", true)}
+          onClick={() => handleBackgroundChange("light", true)}
           ref={(ref) => renderBg(ref, "light", true)}
         />
         <canvas
@@ -70,7 +71,7 @@ const BackgroundModal = () => {
           tabIndex={0}
           width={256}
           height={192}
-          onClick={() => setBackground("dark", false)}
+          onClick={() => handleBackgroundChange("dark", false)}
           ref={(ref) => renderBg(ref, "dark", false)}
         />
         <canvas
@@ -78,7 +79,7 @@ const BackgroundModal = () => {
           tabIndex={0}
           width={256}
           height={192}
-          onClick={() => setBackground("light", false)}
+          onClick={() => handleBackgroundChange("light", false)}
           ref={(ref) => renderBg(ref, "light", false)}
         />
       </div>

@@ -99,13 +99,11 @@ nextApp.prepare().then(async () => {
   // Save room data to database
   const saveRoomData = async (roomId: string) => {
     // Temporarily disabled due to Prisma types issue
-    console.log(`💾 Would save room data for ${roomId} (disabled)`);
   };
 
   // Load room data from database
   const loadRoomData = async (roomId: string): Promise<Move[]> => {
     // Temporarily disabled due to Prisma types issue
-    console.log(`📂 Would load room data for ${roomId} (disabled)`);
     return [];
   };
 
@@ -163,9 +161,7 @@ nextApp.prepare().then(async () => {
       if (userCompletelyLeft) {
         // Only notify other users when the user completely leaves (all tabs closed)
         socket.broadcast.to(roomId).emit("user_disconnected", user.id);
-        console.log(`👋 User ${user.name} completely left room ${roomId}`);
       } else {
-        console.log(`📱 User ${user.name} closed one tab in room ${roomId}, but still has other tabs open`);
       }
 
       // TODO: Save room data when user leaves (disabled due to Prisma types issue)
@@ -193,7 +189,6 @@ nextApp.prepare().then(async () => {
       addUserSocketToRoom(roomId, user.id, socket.id);
 
       // TODO: Create board in database for persistence (disabled due to Prisma types issue)
-      console.log(`📋 Created room ${roomId} for user ${user.name} (persistence disabled)`);
 
       io.to(socket.id).emit("created", roomId);
     });
@@ -233,9 +228,7 @@ nextApp.prepare().then(async () => {
         addUserSocketToRoom(roomId, user.id, socket.id);
 
         if (isUserAlreadyInRoom) {
-          console.log(`📱 User ${user.name} opened another tab in room ${roomId}`);
         } else {
-          console.log(`👋 User ${user.name} joined room ${roomId} for the first time`);
         }
 
         io.to(socket.id).emit("joined", roomId);
@@ -266,7 +259,6 @@ nextApp.prepare().then(async () => {
           socket.broadcast
             .to(roomId)
             .emit("new_user", currentUser.id, currentUser);
-          console.log(`🎉 Notified others that ${currentUser.name} joined room ${roomId}`);
         }
       }
     });
@@ -306,38 +298,31 @@ nextApp.prepare().then(async () => {
     });
 
     socket.on("delete_stroke", (moveId) => {
-      console.log("🗑️ Received delete_stroke request for move:", moveId);
       const roomId = getRoomId();
       const room = rooms.get(roomId);
       if (!room) {
-        console.log("❌ Room not found for delete stroke");
         return;
       }
 
       // Remove the move from drawed moves
       const moveIndex = room.drawed.findIndex(move => move.id === moveId);
       if (moveIndex !== -1) {
-        console.log("✅ Found move in drawed, removing at index:", moveIndex);
         room.drawed.splice(moveIndex, 1);
       } else {
-        console.log("🔍 Move not in drawed, checking users' current moves");
         // Check in users' current moves
         let found = false;
         room.usersMoves.forEach((moves, socketId) => {
           const userMoveIndex = moves.findIndex(move => move.id === moveId);
           if (userMoveIndex !== -1) {
-            console.log("✅ Found move in user moves, removing from socket:", socketId);
             moves.splice(userMoveIndex, 1);
             found = true;
           }
         });
         if (!found) {
-          console.log("❌ Move not found in any location");
         }
       }
 
       // Broadcast stroke deletion to all clients in the room
-      console.log("📡 Broadcasting stroke_deleted to room:", roomId);
       io.to(roomId).emit("stroke_deleted", moveId);
     });
 
@@ -381,6 +366,5 @@ nextApp.prepare().then(async () => {
 
   server.listen(port, () => {
     // eslint-disable-next-line no-console
-    console.log(`> Ready on http://localhost:${port}`);
   });
 });

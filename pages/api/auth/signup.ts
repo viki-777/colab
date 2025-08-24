@@ -56,7 +56,6 @@ export default async function handler(
       user
     })
   } catch (error) {
-    console.error('Signup error:', error)
     res.status(500).json({ message: 'Internal server error' })
   }
 }

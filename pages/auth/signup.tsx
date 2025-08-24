@@ -78,22 +78,22 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br dark:from-indigo-900 via-black dark:via-zinc-900 dark:to-blue-900">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900 via-zinc-900 to-blue-900">
       <div className="w-full max-w-md">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Colabio
           </h1>
-          <p className="text-gray-600 mt-2">Create your account to get started</p>
+          <p className="text-gray-200 mt-2">Create your account to get started</p>
         </div>
 
         {/* Sign Up Form */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-gray-100 text-gray-700">
+        <div className="bg-zinc-800/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-gray-600 text-gray-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">
                 Full Name
               </label>
               <div className="relative">
@@ -105,7 +105,7 @@ export default function SignUp() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-800/70 text-gray-200 placeholder-gray-400"
                   placeholder="Enter your full name"
                 />
               </div>
@@ -113,7 +113,7 @@ export default function SignUp() {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-2">
                 Email Address
               </label>
               <div className="relative">
@@ -125,7 +125,7 @@ export default function SignUp() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-800/70 text-gray-200 placeholder-gray-400"
                   placeholder="Enter your email"
                 />
               </div>
@@ -133,7 +133,7 @@ export default function SignUp() {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -145,13 +145,13 @@ export default function SignUp() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-800/70 text-gray-200 placeholder-gray-400"
                   placeholder="Create a password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300"
                 >
                   {showPassword ? <AiOutlineEyeInvisible className="h-5 w-5" /> : <AiOutlineEye className="h-5 w-5" />}
                 </button>
@@ -160,7 +160,7 @@ export default function SignUp() {
 
             {/* Confirm Password Field */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 mb-2">
                 Confirm Password
               </label>
               <div className="relative">
@@ -172,7 +172,7 @@ export default function SignUp() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white/70"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-800/70 text-gray-200 placeholder-gray-400"
                   placeholder="Confirm your password"
                 />
               </div>
@@ -199,10 +199,10 @@ export default function SignUp() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
+                <div className="w-full border-t border-gray-600" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-4 text-gray-500">Or continue with</span>
+                <span className="bg-zinc-800 px-4 text-gray-400">Or continue with</span>
               </div>
             </div>
           </div>
@@ -211,7 +211,7 @@ export default function SignUp() {
           <div className="mt-6">
             <button
               type="button"
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-600 rounded-xl text-sm font-medium text-gray-200 bg-gray-800 hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
             >
               <FcGoogle className="h-5 w-5" />
               Sign up with Google
@@ -219,12 +219,10 @@ export default function SignUp() {
           </div>
 
           {/* Sign In Link */}
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm text-gray-400">
             Already have an account?{' '}
-            <Link href="/auth/signin">
-              <a className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-                Sign in
-              </a>
+            <Link href="/auth/signin" className="font-medium text-blue-400 hover:text-blue-300 transition-colors">
+              Sign in
             </Link>
           </p>
         </div>

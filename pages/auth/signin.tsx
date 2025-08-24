@@ -49,7 +49,6 @@ export default function SignIn({ providers }: SignInProps) {
     }
 
     try {
-      console.log('🚀 Attempting signin with:', { email: formData.email, hasPassword: !!formData.password })
       
       const result = await signIn('credentials', {
         email: formData.email,
@@ -57,7 +56,6 @@ export default function SignIn({ providers }: SignInProps) {
         redirect: false,
       })
 
-      console.log('📋 SignIn result:', result)
 
       if (result?.error) {
         toast.error(`Authentication failed: ${result.error}`)
@@ -81,7 +79,7 @@ export default function SignIn({ providers }: SignInProps) {
 
   return (
     // Parent container using flex for the two-column layout
-    <div className="min-h-screen flex bg-gradient-to-br dark:from-indigo-900 via-black dark:via-zinc-900 dark:to-blue-900">
+    <div className="min-h-screen flex bg-gradient-to-br from-indigo-900 via-black via-zinc-900 to-blue-900">
       
       {/* Left Side: Sign-In Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 text-gray-700">
@@ -94,7 +92,7 @@ export default function SignIn({ providers }: SignInProps) {
             <p className="text-gray-200 mt-2">Collaborate on the digital board</p>
           </div>
 
-          {/* Sign In Form Container */}
+       
           <div className="bg-zinc/80 backdrop-blur-xl rounded-2xl shadow-xl p-8 border border-gray-100">
             {/* Show success message if redirected from signup */}
             {router.query.message === 'account-created' && (
@@ -193,33 +191,31 @@ export default function SignIn({ providers }: SignInProps) {
             </div>
 
             {/* Sign Up Link */}
-            <p className="mt-6 text-center text-sm text-gray-300">
-              Don't have an account?{' '}
-              <Link href="/auth/signup">
-                <a className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
-                  Sign up
-                </a>
-              </Link>
-            </p>
+                      {/* Sign Up Link */}
+          <p className="mt-6 text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
+              Sign up
+            </Link>
+          </p>
           </div>
         </div>
       </div>
 
-      {/* Right Side: Platform Image */}
-      {/* This section is hidden on small screens (below lg breakpoint) and takes up half the width on large screens */}
       
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8 relative">
-       
-          {/* You can replace this with your own image component or a simple img tag */}
-          <img 
-            src="/signin.png" // Example image from Unsplash
-            alt="Collaboration Platform"
-            className=" object-cover w-100 h-100 rounded-3xl shadow-2xl"
-          />
-          <div className="absolute inset-0 bg-black/40 rounded-3xl"></div>
-          <div className="absolute bottom-10 left-10 p-4 text-white">
-            <h2 className="text-4xl font-bold">Real-time Collaboration</h2>
-            <p className="mt-2 max-w-md">Join teams from around the world and bring your ideas to life on our interactive digital canvas.</p>
+      
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8">
+          <div className="relative w-full max-w-lg h-96 lg:h-[500px]">
+            <img 
+              src="/logo.png" 
+              alt="Collaboration Platform"
+              className="w-full h-full object-cover rounded-3xl shadow-2xl"
+            />
+            <div className="absolute inset-0 bg-black/30 rounded-3xl"></div>
+            <div className="absolute bottom-8 left-8 right-8 text-white">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-2">Real-time Collaboration</h2>
+              <p className="text-lg opacity-90">Join teams from around the world and bring your ideas to life on our interactive digital canvas.</p>
+            </div>
           </div>
       </div>
     </div>

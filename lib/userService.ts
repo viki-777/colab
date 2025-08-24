@@ -29,7 +29,6 @@ const loadUsers = (): User[] => {
       return JSON.parse(data)
     }
   } catch (error) {
-    console.error('Error loading users:', error)
   }
   
   // Return default users if file doesn't exist or there's an error
@@ -55,7 +54,6 @@ const saveUsers = (users: User[]) => {
     ensureDataDir()
     fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2))
   } catch (error) {
-    console.error('Error saving users:', error)
   }
 }
 

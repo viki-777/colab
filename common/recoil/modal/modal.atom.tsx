@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import React from "react";
 
 export const modalAtom = atom<{
   modal: JSX.Element | JSX.Element[];
@@ -6,7 +7,7 @@ export const modalAtom = atom<{
 }>({
   key: "Colabio_modal_state_v2",
   default: {
-    modal: <></>,
+    modal: React.createElement(React.Fragment),
     opened: false,
   },
 });

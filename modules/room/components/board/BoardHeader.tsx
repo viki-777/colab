@@ -46,7 +46,6 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
         setEditTitle(boardData.title);
       }
     } catch (error) {
-      console.error('Error fetching board info:', error);
     } finally {
       setLoading(false);
     }
@@ -71,7 +70,6 @@ const BoardHeader = ({ roomId }: BoardHeaderProps) => {
         setIsEditing(false);
       }
     } catch (error) {
-      console.error('Error updating board title:', error);
     }
   };
 
